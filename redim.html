@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+	<meta name="author" content="Val pour 5v7.ovh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--<link rel="icon" type="image/png" href="resize.png">-->
+    <title>Réduire la taille d'une image - 5V7.ovh</title>
+	<link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+	<style>
+		body{
+			text-align:center;
+			max-width:640px;
+			margin:50px auto;
+			
+			font-family: 'Fira Sans', sans-serif;
+		}
+		a{
+			text-decoration:none;
+			color:blue;
+		}
+		#progress{
+			color:red;
+			font-style:italic;
+		}
+		img,canvas{
+			max-width:100%;
+		}
+		div{
+			display:none;
+		}
+		label {
+			display: block;
+			font-size:1.2em;
+		}
+		input,
+		label {
+			margin: .4rem 0;
+		}
+	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		$(function(){
+			function ResizeImage(image, max_width, max_height){
+				image.height *= max_width / image.width;
+				image.width = max_width;
+			}
+			
+			$("input").on('change', function(e){
+				$("input").replaceWith("<p id=\"progress\">Conversion en cours... Soyez patient.</p>");
+				
+				let ratio = 800;
+				let link = document.getElementById('a');
+				let canvas = document.getElementById('canvas');
+				canvas.height = 0;
+				canvas.width = ratio;
+				let ctx = canvas.getContext("2d");
+				let images = [];
+				let count = e.target.files.length;
+				
+				console.log(e.target.files.length+" files:");
+								
+				for (let i = 0, file; file = e.target.files[i]; i++) {
+					let reader = new FileReader();
+					let fileName = file.name;
+					reader.onloadend = function(g) {						
+						let img = new Image();
+						img.src = g.target.result;
+						img.onload = function(){	
+							console.log(fileName);
+							
+							ResizeImage(img, ratio, ratio);
+							canvas.height += img.height;
+							images.push(img);
+							
+							count--;
+							if (count === 0) {									
+								let lastH = 0;
+								for(let j = 0, image; image = images[j]; j++){	
+									$("#progress").replaceWith("<p id=\"progress\">Image #"+(i+1)+"</p>");
+				
+									ctx.drawImage(image, 0, lastH, image.width, image.height);
+									
+									lastH += image.height;
+								}
+								$("div").show();
+							
+								link.href = canvas.toDataURL("image/jpeg");
+								link.download = Date.now()+"_redim_pronote.jpg";
+								
+								$("#progress").replaceWith("<p id=\"progress\">Terminé!</p>");
+							}
+						};
+					}
+					reader.readAsDataURL(file);
+				}
+			});
+			
+		});
+	</script>
+  </head>
+  <body>
+	<!--<img src="resize.png" width="100" title="&copy; Serveur SVT 5v7.ovh - Tous droits réservés">-->
+	<h1>Réduire la taille d'une image</h1>
+	<p>
+		<label for="file">Choisissez <b>une ou plusieurs images</b> à réduire et <a href="https://fr.wikipedia.org/wiki/Concat%C3%A9nation" target="_blank">concaténer</a> (fusionner) en <b>une seule</b>:</label>
+		<input type="file" name="file" accept="image/png, image/jpeg" multiple>
+	</p>
+	<div>
+		<hr>
+		<h2>Image redimensionnée pour Pronote:</h2>
+		<p><button onclick="$('canvas').click();">Télécharger l'image redimensionnée</button></p>
+		<a id="a" href="" download="" title="Cliquer sur l'image redimensionnée pour la télécharger"><canvas id="canvas"></canvas></a>
+	</div>
+	<hr>
+	&copy; Serveur SVT 2020 - Page incompatible avec Internet Explorer - Aucune donnée n'est stockée sur le serveur
+  </body>
+</html>
