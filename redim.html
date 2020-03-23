@@ -77,7 +77,7 @@
 							if (count === 0) {									
 								let lastH = 0;
 								for(let j = 0, image; image = images[j]; j++){	
-									$("#progress").replaceWith("<p id=\"progress\">Image #"+(i+1)+"</p>");
+									$("#progress").html("Image #"+(i+1));
 				
 									ctx.drawImage(image, 0, lastH, image.width, image.height);
 									
@@ -85,10 +85,10 @@
 								}
 								$("div").show();
 							
-								link.href = canvas.toDataURL("image/jpeg");
+								link.href = canvas.toDataURL("image/jpeg", .75);
 								link.download = Date.now()+"_redim_pronote.jpg";
 								
-								$("#progress").replaceWith("<p id=\"progress\">Terminé!</p>");
+								$("#progress").html("Terminé!");
 							}
 						};
 					}
