@@ -30,7 +30,7 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 This project is licensed under the MIT License :
 
-Copyright (c) 2025 Valentin Cotta
+Copyright (c) 2020 Valentin Cotta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
