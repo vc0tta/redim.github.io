@@ -10,9 +10,9 @@ Redim is a simple web tool designed to help high school students easily concaten
 
 ## How to Use
 
-To use Redim locally, simply head to the https://5v7.github.io/redim.github.io/ web page and open it in any modern web browser. No additional installation is required.
+To use Redim locally, simply head to the https://vc0tta.github.io/redim.github.io/ web page and open it in any modern web browser. No additional installation is required.
 
-1. **Open the Tool**: Open https://5v7.github.io/redim.github.io/ in your web browser.
+1. **Open the Tool**: Open https://vc0tta.github.io/redim.github.io/ in your web browser.
 2. **Upload Images**: Click on the upload button to select multiple images from your device.
 3. **Download**: Once the process is complete, download the resulting image file.
 
